@@ -52,7 +52,7 @@ function mycustomform_my_form_validate($form, &$form_state) {
     drupal_set_message('Form Submitted Successfully');
   }
 }
-function mycustomform_my_form($form, &$form_state) {       
+function mycustomform_my_form_submit($form, &$form_state) {       
   $valid_firstname = $form_state['values']['firstname']; 
   $valid_lastname = $form_state['values']['lastname'];
   $valid_email = $form_state['values']['email'];
