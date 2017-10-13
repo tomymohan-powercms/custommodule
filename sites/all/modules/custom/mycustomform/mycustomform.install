@@ -1,0 +1,30 @@
+<?php
+function mycustomform_schema() {
+  $schema['customer_details'] = array(
+    'description' => 'The table for storing the user data.',
+    'fields' => array(
+      'first_name' => array(
+        'description' => 'user firstname.',
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'last_name' => array(
+        'description' => 'user last name.',
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'email' => array(
+        'description' => 'user email.',
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+    ),
+  );
+  return $schema;
+}

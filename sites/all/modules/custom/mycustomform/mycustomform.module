@@ -1,0 +1,66 @@
+<?php
+function mycustomform_menu() {
+  $items = array();
+  $items['customer-data'] = array(
+    'title' => 'Customer Details',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('mycustomform_my_form'),
+    'access arguments' => array('access content'),
+    'description' => 'My form',
+    'type' => MENU_CALLBACK,
+  );
+  return $items;
+}
+
+function mycustomform_my_form($form, &$form_state) {
+  $form['firstname'] = array(
+    '#type' => 'textfield',
+    '#title' => t('First Name'),
+    '#required' => TRUE,
+    '#description' => "Please enter your First Name.",
+
+  );
+  $form['lastname'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Last Name'),
+    '#required' => TRUE,
+    '#description' => 'Please enter your Last Name.',
+  );  
+  $form['email'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Email'),
+    '#description' => "Please enter your Email.",
+  );
+  $form['description'] = array (
+    '#type' => 'textarea',
+    '#title' => t('Brief Description'),
+    '#description' => "Please enter your Description",
+  );  
+  $form['submit'] = array (
+    '#type'  => 'submit',
+    '#value' => 'Submit',
+  );
+  return $form;
+}
+
+function mycustomform_my_form_validate($form, &$form_state) {
+  $valid_email = $form_state['values']['email'];
+  if (!valid_email_address($valid_email)) {
+  form_set_error('email', 'Sorry. Your email address ' . $valid_email . ' is not valid. Please submit a valid E-mail address.');
+  }
+  else {
+    drupal_set_message('Form Submitted Successfully');
+  }
+}
+function field_attach_submit($form, &$form_state) {       
+  $valid_firstname = $form_state['values']['firstname']; 
+  $valid_lastname = $form_state['values']['lastname'];
+  $valid_email = $form_state['values']['email'];
+  db_insert('customer_details')->fields(array(
+    'first_name' => $valid_firstname,
+    'last_name' => $valid_lastname,  
+    'email' => $valid_email,     
+  ))->execute();
+  drupal_set_message("Sucessfully saved Details");
+}
+
